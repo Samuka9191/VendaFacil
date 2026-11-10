@@ -1,0 +1,325 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --vinho: #6b1230;
+    --vinho-escuro: #4f0c23;
+    --dourado: #d4a95a;
+    --dourado-claro: #e8d3a3;
+    --creme: #f5f1ea;
+    --texto: #3a2a30;
+    --texto-suave: #7a6a70;
+    --borda: #d9cfc6;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: radial-gradient(circle at 50% 0%, #fffaf0, var(--creme) 60%, #ebe4d8);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* CABEÇALHO */
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: var(--vinho);
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+header p {
+    color: var(--texto-suave);
+    margin-top: 8px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+main {
+    max-width: 850px;
+    margin: auto;
+}
+
+/* PAINEL DE FINALIZAÇÃO */
+
+.produtos {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    border-top: 6px solid var(--vinho);
+    box-shadow: 0 14px 34px rgba(107, 18, 48, 0.15);
+}
+
+.produtos h2 {
+    color: var(--vinho);
+    margin-bottom: 25px;
+    text-align: center;
+    font-weight: 800;
+}
+
+/* DATA E HORA */
+
+.data-pedido {
+    background: #fffdfa;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.data-pedido strong {
+    color: var(--vinho);
+}
+
+.data-pedido span {
+    color: var(--texto-suave);
+}
+
+/* LISTA DE PRODUTOS */
+
+#resumoCarrinho {
+    list-style: none;
+    margin-bottom: 25px;
+}
+
+#resumoCarrinho li {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fffdfa;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: 0.2s;
+}
+
+#resumoCarrinho li:hover {
+    border-color: var(--dourado);
+    box-shadow: 0 5px 15px rgba(107, 18, 48, 0.10);
+}
+
+/* FOTOS DOS PRODUTOS */
+
+#resumoCarrinho img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    background: white;
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+}
+
+/* INFORMAÇÕES DOS PRODUTOS */
+
+.item-info {
+    flex: 1;
+}
+
+.item-info strong {
+    display: block;
+    color: var(--vinho);
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.item-info p {
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+.item-info .desconto {
+    color: #25834b;
+    font-weight: 800;
+}
+
+.item-info .preco-antigo {
+    color: #999;
+    text-decoration: line-through;
+}
+
+/* RESUMO DOS VALORES */
+
+.resumo-valores {
+    background: #fffdfa;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 25px;
+}
+
+.resumo-valores p {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+}
+
+.resumo-valores p strong {
+    color: var(--vinho);
+}
+
+.resumo-valores h2 {
+    border-top: 1px solid var(--borda);
+    padding-top: 20px;
+    margin: 10px 0 0;
+    color: var(--vinho);
+    text-align: right;
+    font-size: 1.4rem;
+}
+
+/* FORMAS DE PAGAMENTO */
+
+.pagamento {
+    background: white;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 25px;
+}
+
+.pagamento h2 {
+    color: var(--vinho);
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.pagamento label {
+    display: block;
+    color: var(--texto);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.pagamento select {
+    width: 100%;
+    padding: 15px;
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    background: #fffdfa;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagamento select:focus {
+    border-color: var(--dourado);
+    box-shadow: 0 0 0 4px rgba(212, 169, 90, 0.2);
+}
+
+/* BOTÕES */
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 12px;
+    border: 2px solid var(--vinho-escuro);
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--vinho), var(--vinho-escuro));
+    color: var(--dourado-claro);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    color: white;
+    box-shadow: 0 6px 16px rgba(107, 18, 48, 0.25);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* SEGUNDO BOTÃO */
+
+button:last-child {
+    background: white;
+    color: var(--vinho);
+    border: 2px solid var(--vinho);
+}
+
+button:last-child:hover {
+    background: var(--creme);
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .produtos {
+        padding: 18px;
+    }
+
+    #resumoCarrinho li {
+        gap: 12px;
+        padding: 10px;
+    }
+
+    #resumoCarrinho img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .item-info strong {
+        font-size: 0.82rem;
+    }
+
+    .item-info p {
+        font-size: 0.75rem;
+    }
+
+    .resumo-valores {
+        padding: 15px;
+    }
+
+    .resumo-valores p {
+        font-size: 0.82rem;
+    }
+
+    .resumo-valores h2 {
+        font-size: 1.15rem;
+    }
+
+    .pagamento {
+        padding: 15px;
+    }
+
+    .pagamento select {
+        font-size: 0.8rem;
+    }
+}

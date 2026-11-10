@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Finalizar Compra</h1>
+        <p>Estamos quase lá! Confira seu pedido.</p>
+    </header>
+
+    <main>
+
+        <section class="produtos">
+
+            <h2>🛍️ Resumo do Pedido</h2>
+
+            <div class="data-pedido">
+                <strong>Data e horário do pedido:</strong>
+                <span id="dataHora"></span>
+            </div>
+
+            <ul id="resumoCarrinho"></ul>
+
+            <div class="resumo-valores">
+
+                <p>
+                    Subtotal:
+                    <strong id="subtotal">R$ 0,00</strong>
+                </p>
+
+                <p>
+                    Desconto:
+                    <strong id="descontoTotal">R$ 0,00</strong>
+                </p>
+
+                <h2 id="totalCompra">Total: R$ 0,00</h2>
+
+            </div>
+
+            <div class="pagamento">
+
+                <h2>💳 Forma de Pagamento</h2>
+
+                <label for="formaPagamento">
+                    Escolha como deseja pagar:
+                </label>
+
+                <select id="formaPagamento">
+                    <option value="">Selecione uma forma de pagamento</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão de Crédito">Cartão de Crédito</option>
+                    <option value="Cartão de Débito">Cartão de Débito</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+
+            </div>
+
+            <button onclick="confirmarPedido()">
+                Confirmar Pedido
+            </button>
+
+            <button onclick="voltarLoja()">
+                Voltar para a Loja
+            </button>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        const carrinho = JSON.parse(
+            localStorage.getItem("carrinho")
+        ) || [];
+
+        const lista = document.getElementById("resumoCarrinho");
+
+        let subtotal = 0;
+        let descontoTotal = 0;
+        let total = 0;
+
+        // DATA E HORÁRIO
+        document.getElementById("dataHora").textContent =
+            new Date().toLocaleString("pt-BR");
+
+        // MOSTRAR PRODUTOS
+        carrinho.forEach(item => {
+
+            const quantidade = Number(item.quantidade) || 1;
+            const preco = Number(item.preco) || 0;
+            const desconto = Number(item.desconto) || 0;
+
+            const valorOriginal = preco * quantidade;
+            const valorDesconto = valorOriginal * (desconto / 100);
+            const valorFinal = valorOriginal - valorDesconto;
+
+            subtotal += valorOriginal;
+            descontoTotal += valorDesconto;
+            total += valorFinal;
+
+            const li = document.createElement("li");
+
+            li.innerHTML = `
+                <img src="${item.imagem}" alt="${item.nome}">
+
+                <div class="item-info">
+                    <strong>${item.nome}</strong>
+
+                    <p>Preço unitário: R$ ${preco.toFixed(2).replace(".", ",")}</p>
+
+                    <p>Quantidade: ${quantidade}</p>
+
+                    ${
+                        desconto > 0
+                        ? `<p class="desconto">
+                            Desconto: ${desconto}%
+                           </p>
+                           <p class="preco-antigo">
+                            R$ ${valorOriginal.toFixed(2).replace(".", ",")}
+                           </p>`
+                        : `<p>Sem desconto</p>`
+                    }
+
+                    <strong>
+                        Total: R$ ${valorFinal.toFixed(2).replace(".", ",")}
+                    </strong>
+                </div>
+            `;
+
+            lista.appendChild(li);
+
+        });
+
+        // MOSTRAR VALORES
+        function moeda(valor) {
+            return valor.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+            });
+        }
+
+        document.getElementById("subtotal").textContent =
+            moeda(subtotal);
+
+        document.getElementById("descontoTotal").textContent =
+            moeda(descontoTotal);
+
+        document.getElementById("totalCompra").textContent =
+            "Total: " + moeda(total);
+
+        // CONFIRMAR PEDIDO
+        function confirmarPedido() {
+
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            const pagamento =
+                document.getElementById("formaPagamento").value;
+
+            if (!pagamento) {
+                alert("Escolha uma forma de pagamento!");
+                return;
+            }
+
+            const confirmar = confirm(
+                "Deseja confirmar seu pedido?\n\n" +
+                "Pagamento: " + pagamento +
+                "\nTotal: " + moeda(total)
+            );
+
+            if (confirmar) {
+
+                alert(
+                    "Pedido realizado com sucesso! ❤️\n\n" +
+                    "Forma de pagamento: " + pagamento +
+                    "\nTotal: " + moeda(total)
+                );
+
+                localStorage.removeItem("carrinho");
+
+                window.location.href = "../CarrinhoUsuario/index.html";
+            }
+        }
+
+        // VOLTAR PARA LOJA
+        function voltarLoja() {
+            window.location.href = "../CarrinhoUsuario/index.html";
+        }
+
+    </script>
+
+</body>
+</html>
