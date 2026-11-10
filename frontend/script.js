@@ -1,46 +1,77 @@
-let totalCompra = 0;
 
-function adicionarCarrinho(nome, preco){
+let carrinho = [];
+
+function adicionarCarrinho(nome, preco) {
+    // Localiza o card do produto pelo nome
+    const produtos = document.querySelectorAll(".produto");
+    let imagem = "";
+
+    produtos.forEach(produto => {
+        const titulo = produto.querySelector("h3");
+
+        if (titulo && titulo.textContent.includes(nome)) {
+            imagem = produto.querySelector("img").src;
+        }
+    });
+
+    const itemExistente = carrinho.find(item => item.nome === nome);
+
+    if (itemExistente) {
+        itemExistente.quantidade++;
+    } else {
+        carrinho.push({
+            nome: nome,
+            preco: preco,
+            imagem: imagem,
+            quantidade: 1
+        });
+    }
+
+    atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
     const lista = document.getElementById("listaCarrinho");
+    const totalElemento = document.getElementById("total");
 
-    const item = document.createElement("li");
-    item.textContent = nome + " - R$ " + preco.toFixed(2)
+    lista.innerHTML = "";
 
-    lista.appendChild(item);
+    let total = 0;
 
-    totalCompra = totalCompra + preco; 
+    carrinho.forEach(item => {
+        total += item.preco * item.quantidade;
 
-    atualizarTotal();
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <img src="${item.imagem}" alt="${item.nome}">
+
+            <div class="item-info">
+                <strong>${item.nome}</strong>
+                <span>R$ ${item.preco.toFixed(2).replace(".", ",")}</span>
+                <span>Quantidade: ${item.quantidade}</span>
+            </div>
+        `;
+
+        lista.appendChild(li);
+    });
+
+    totalElemento.textContent =
+        "Total: R$ " + total.toFixed(2).replace(".", ",");
 }
 
-function atualizarTotal(){
-    const total = document.getElementById("total");
-
-    total.textContent = "Total: R$ " + totalCompra.toFixed(2);
+function limparCarrinho() {
+    carrinho = [];
+    atualizarCarrinho();
 }
 
-function finalizarCompra(){
-    if (totalCompra === 0){
-        alert("Adicione pelo menos um produto ao carrinho!!");
-    } else {
-        alert("Compra finalizada! R$ " + totalCompra.toFixed(2))
-        
-        document.getElementById("listaCarrinho").innerHTML = "";
-
-        totalCompra = 0;
-
-        atualizarTotal();
+function finalizarCompra() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
     }
-}
 
-function limparCarrinho(){
-    if (totalCompra === 0){
-        alert("O Carrinho já está vazio!");
-    } else {
-        document.getElementById("listaCarrinho").innerHTML = "";
-
-        totalCompra = 0;
-
-        atualizarTotal();
-    }
+    alert("Compra finalizada com sucesso!");
+    carrinho = [];
+    atualizarCarrinho();
 }
