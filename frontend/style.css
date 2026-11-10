@@ -1,0 +1,266 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --vinho: #6b1230;
+    --vinho-escuro: #4f0c23;
+    --dourado: #d4a95a;
+    --dourado-claro: #e8d3a3;
+    --creme: #f5f1ea;
+    --texto: #3a2a30;
+    --texto-suave: #7a6a70;
+    --borda: #d9cfc6;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    background: radial-gradient(circle at 50% 0%, #fffaf0, var(--creme) 60%, #ebe4d8);
+    color: var(--texto);
+    min-height: 100vh;
+    padding: 30px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    color: var(--vinho);
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+header p {
+    color: var(--texto-suave);
+    margin-top: 8px;
+}
+
+/* BARRA DE PESQUISA */
+
+.pesquisa {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    position: relative;
+}
+
+.pesquisa input {
+    width: 100%;
+    padding: 16px 50px 16px 18px;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    background: #fffdfa;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.pesquisa input:focus {
+    border-color: var(--dourado);
+    box-shadow: 0 0 0 4px rgba(212, 169, 90, 0.2);
+}
+
+.pesquisa span {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ORGANIZAÇÃO PRINCIPAL */
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+    align-items: start;
+}
+
+/* PRODUTOS */
+
+.produtos {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    border-top: 6px solid var(--vinho);
+    box-shadow: 0 14px 34px rgba(107, 18, 48, 0.15);
+}
+
+.produtos h2,
+.carrinho h2 {
+    color: var(--vinho);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.lista-produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+}
+
+.produto {
+    background: #fffdfa;
+    border: 1.5px solid var(--borda);
+    border-radius: 12px;
+    padding: 22px;
+    transition: 0.2s;
+}
+
+.produto:hover {
+    border-color: var(--dourado);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(107, 18, 48, 0.10);
+}
+
+.produto h3 {
+    color: var(--vinho);
+    margin-bottom: 12px;
+}
+
+.produto p {
+    color: var(--texto-suave);
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+/* BOTÕES */
+
+button {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid var(--vinho-escuro);
+    border-radius: 10px;
+    background: linear-gradient(180deg, var(--vinho), var(--vinho-escuro));
+    color: var(--dourado-claro);
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    color: white;
+    box-shadow: 0 6px 16px rgba(107, 18, 48, 0.25);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* CARRINHO À DIREITA */
+
+.carrinho {
+    background: white;
+    padding: 28px 22px;
+    border-radius: 18px;
+    border-top: 6px solid var(--vinho);
+    box-shadow: 0 14px 34px rgba(107, 18, 48, 0.18);
+    position: sticky;
+    top: 20px;
+}
+
+.carrinho ul {
+    list-style: none;
+    margin-bottom: 20px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.carrinho li {
+    background: #fffdfa;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+}
+
+#total {
+    color: var(--vinho);
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+.carrinho button {
+    margin-top: 10px;
+}
+
+.carrinho button:last-child {
+    background: white;
+    color: var(--vinho);
+    border: 2px solid var(--vinho);
+}
+
+.carrinho button:last-child:hover {
+    background: var(--creme);
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 800px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .carrinho {
+        position: static;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 18px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .produtos {
+        padding: 20px;
+    }
+}
+
+/* CABEÇALHO COM IMAGEM */
+
+header {
+    margin-bottom: 25px;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.titulo-loja {
+    text-align: left;
+}
+
+header h1 {
+    color: var(--vinho);
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+header p {
+    color: var(--texto-suave);
+    margin-top: 8px;
+}
