@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <img class="logo" src="../assets/logo.png" alt="Logo VendaFácil">
     <form class="login-form">
@@ -20,14 +22,19 @@
         <div>
             <input type="checkbox" id="lembrar" name="lembrar">
             <label for="lembrar">Lembrar-me</label>
-            <a href="#">Esqueceu a senha?</a>
+            <a href="../EsqueceuSenha/esqueceuSenha.html">Esqueceu a senha?</a>
         </div>
 
-        <button type="submit" id="botaoEntrar">Entrar</button>
+        <p id="mensagemErro"></p>
+
+        <button type="button" id="botaoEntrar">Entrar</button>
 
         <div>
-        Não tem uma conta? <a href="#">Cadastre-se</a>
+            Não tem uma conta? <a href="../CadastroUsuario/cadastroUsuario.html">Cadastre-se</a>
         </div>
+        
     </form>
 </body>
+
 </html>
+<script src="script.js" defer></script>
