@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha | Venda Fácil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="container">
+
+        <div class="logo">
+            <img src="../assets/logo.png" alt="Logo Venda Fácil">
+        </div>
+
+        <section class="card">
+
+            <h1>Esqueceu a senha?</h1>
+
+            <p class="subtitulo">
+                Não se preocupe! Vamos ajudar você a recuperar seu acesso.
+            </p>
+
+            <form id="formRecuperacao">
+
+                <div class="campo">
+                    <label for="email">E-mail cadastrado:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Digite seu e-mail"
+                        required
+                    >
+                </div>
+
+                <button type="submit">
+                    Enviar código de recuperação
+                </button>
+
+            </form>
+
+            <div id="mensagem"></div>
+
+            <div class="voltar">
+                <a href="../LoginUsuario/usuarioLogin.html">
+                    Voltar para o login
+                </a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
