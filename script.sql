@@ -3,8 +3,8 @@
 -- BANCO DE DADOS: VENDA FACIL
 -- =========================================
 
-CREATE DATABASE IF NOT EXISTS Venda_Facil;
-USE Venda_Facil;
+CREATE DATABASE IF NOT EXISTS vendaFacil;
+USE vendaFacil;
 
 
 -- =========================================
