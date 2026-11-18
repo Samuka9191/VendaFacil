@@ -8,22 +8,28 @@ USE vendaFacil;
 
 
 -- =========================================
--- 1. CRIACAO DAS TABELAS
+-- 1. TABELA: USUARIOS
 -- =========================================
 
 CREATE TABLE Usuarios (
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
-    email VARCHAR(100),
-    senha VARCHAR(255),
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
     telefone VARCHAR(20),
     data_cadastro DATE,
     status VARCHAR(30)
 );
 
+
+-- =========================================
+-- 2. TABELA: RECUPERACAO_SENHA
+-- =========================================
+
 CREATE TABLE Recuperacao_Senha (
     id_recuperacao INT PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT,
+    id_usuario INT NOT NULL,
     codigo VARCHAR(100),
     expiracao DATETIME,
     utilizado BOOLEAN,
@@ -31,11 +37,21 @@ CREATE TABLE Recuperacao_Senha (
         REFERENCES Usuarios(id_usuario)
 );
 
+
+-- =========================================
+-- 3. TABELA: CATEGORIAS
+-- =========================================
+
 CREATE TABLE Categorias (
     id_categoria INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     descricao TEXT
 );
+
+
+-- =========================================
+-- 4. TABELA: PRODUTOS
+-- =========================================
 
 CREATE TABLE Produtos (
     id_produto INT PRIMARY KEY AUTO_INCREMENT,
@@ -44,14 +60,19 @@ CREATE TABLE Produtos (
     preco DECIMAL(10,2),
     estoque INT,
     ativo BOOLEAN,
-    id_categoria INT,
+    id_categoria INT NOT NULL,
     FOREIGN KEY (id_categoria)
         REFERENCES Categorias(id_categoria)
 );
 
+
+-- =========================================
+-- 5. TABELA: PEDIDOS
+-- =========================================
+
 CREATE TABLE Pedidos (
     id_pedido INT PRIMARY KEY AUTO_INCREMENT,
-    id_usuario INT,
+    id_usuario INT NOT NULL,
     data_pedido DATE,
     valor_total DECIMAL(10,2),
     status VARCHAR(30),
@@ -59,10 +80,15 @@ CREATE TABLE Pedidos (
         REFERENCES Usuarios(id_usuario)
 );
 
+
+-- =========================================
+-- 6. TABELA: ITEM_PEDIDO
+-- =========================================
+
 CREATE TABLE Item_Pedido (
     id_item INT PRIMARY KEY AUTO_INCREMENT,
-    id_pedido INT,
-    id_produto INT,
+    id_pedido INT NOT NULL,
+    id_produto INT NOT NULL,
     quantidade INT,
     preco_unitario DECIMAL(10,2),
     FOREIGN KEY (id_pedido)
@@ -71,9 +97,14 @@ CREATE TABLE Item_Pedido (
         REFERENCES Produtos(id_produto)
 );
 
+
+-- =========================================
+-- 7. TABELA: PAGAMENTOS
+-- =========================================
+
 CREATE TABLE Pagamentos (
     id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
-    id_pedido INT,
+    id_pedido INT NOT NULL,
     metodo_pagamento VARCHAR(50),
     valor DECIMAL(10,2),
     data_pagamento DATE,
@@ -82,9 +113,14 @@ CREATE TABLE Pagamentos (
         REFERENCES Pedidos(id_pedido)
 );
 
+
+-- =========================================
+-- 8. TABELA: ENTREGAS
+-- =========================================
+
 CREATE TABLE Entregas (
     id_entrega INT PRIMARY KEY AUTO_INCREMENT,
-    id_pedido INT,
+    id_pedido INT NOT NULL,
     tipo_entrega VARCHAR(50),
     endereco VARCHAR(255),
     data_envio DATE,
@@ -96,25 +132,29 @@ CREATE TABLE Entregas (
 
 
 -- =========================================
--- 2. INSERT - USUARIOS
+-- INSERTS
 -- =========================================
+
+
+-- 9. INSERT: USUARIOS
 
 INSERT INTO Usuarios
-(nome, email, senha, telefone, data_cadastro, status)
+(nome, email, senha, cpf, telefone, data_cadastro, status)
 VALUES
 ('Joao Silva', 'joao@gmail.com', '123456',
- '(11) 99999-1111', '2026-11-10', 'Ativo'),
+ '111.111.111-11', '(11) 99999-1111',
+ '2026-11-10', 'Ativo'),
 
 ('Maria Santos', 'maria@gmail.com', '123456',
- '(11) 99999-2222', '2026-11-11', 'Ativo'),
+ '222.222.222-22', '(11) 99999-2222',
+ '2026-11-11', 'Ativo'),
 
 ('Pedro Oliveira', 'pedro@gmail.com', '123456',
- '(11) 99999-3333', '2026-11-12', 'Ativo');
+ '333.333.333-33', '(11) 99999-3333',
+ '2026-11-12', 'Ativo');
 
 
--- =========================================
--- 3. INSERT - RECUPERACAO DE SENHA
--- =========================================
+-- 10. INSERT: RECUPERACAO_SENHA
 
 INSERT INTO Recuperacao_Senha
 (id_usuario, codigo, expiracao, utilizado)
@@ -124,9 +164,7 @@ VALUES
 (3, 'GHI789', '2026-11-20 14:00:00', FALSE);
 
 
--- =========================================
--- 4. INSERT - CATEGORIAS
--- =========================================
+-- 11. INSERT: CATEGORIAS
 
 INSERT INTO Categorias
 (nome, descricao)
@@ -136,9 +174,7 @@ VALUES
 ('Acessorios', 'Acessorios diversos');
 
 
--- =========================================
--- 5. INSERT - PRODUTOS
--- =========================================
+-- 12. INSERT: PRODUTOS
 
 INSERT INTO Produtos
 (nome, descricao, preco, estoque, ativo, id_categoria)
@@ -149,9 +185,7 @@ VALUES
 ('Relogio', 'Relogio digital', 150.00, 20, TRUE, 3);
 
 
--- =========================================
--- 6. INSERT - PEDIDOS
--- =========================================
+-- 13. INSERT: PEDIDOS
 
 INSERT INTO Pedidos
 (id_usuario, data_pedido, valor_total, status)
@@ -161,9 +195,7 @@ VALUES
 (3, '2026-11-12', 150.00, 'Enviado');
 
 
--- =========================================
--- 7. INSERT - ITEM_PEDIDO
--- =========================================
+-- 14. INSERT: ITEM_PEDIDO
 
 INSERT INTO Item_Pedido
 (id_pedido, id_produto, quantidade, preco_unitario)
@@ -174,9 +206,7 @@ VALUES
 (3, 4, 1, 150.00);
 
 
--- =========================================
--- 8. INSERT - PAGAMENTOS
--- =========================================
+-- 15. INSERT: PAGAMENTOS
 
 INSERT INTO Pagamentos
 (id_pedido, metodo_pagamento, valor, data_pagamento, status)
@@ -186,9 +216,7 @@ VALUES
 (3, 'Boleto', 150.00, '2026-11-12', 'Aprovado');
 
 
--- =========================================
--- 9. INSERT - ENTREGAS
--- =========================================
+-- 16. INSERT: ENTREGAS
 
 INSERT INTO Entregas
 (id_pedido, tipo_entrega, endereco, data_envio, status, codigo_rastreio)
@@ -204,76 +232,74 @@ VALUES
 
 
 -- =========================================
--- 10. SELECT - TODOS OS USUARIOS
+-- SELECTS
 -- =========================================
+
+
+-- 17. TODOS OS USUARIOS
 
 SELECT * FROM Usuarios;
 
 
--- =========================================
--- 11. SELECT - RECUPERACAO DE SENHA
--- =========================================
+-- 18. TODOS OS DADOS DOS USUARIOS, INCLUINDO CPF
+
+SELECT
+    id_usuario,
+    nome,
+    email,
+    cpf,
+    telefone,
+    data_cadastro,
+    status
+FROM Usuarios;
+
+
+-- 19. RECUPERACAO DE SENHA
 
 SELECT * FROM Recuperacao_Senha;
 
 
--- =========================================
--- 12. SELECT - CATEGORIAS
--- =========================================
+-- 20. CATEGORIAS
 
 SELECT * FROM Categorias;
 
 
--- =========================================
--- 13. SELECT - PRODUTOS
--- =========================================
+-- 21. PRODUTOS
 
 SELECT * FROM Produtos;
 
 
--- =========================================
--- 14. SELECT - PEDIDOS
--- =========================================
+-- 22. PEDIDOS
 
 SELECT * FROM Pedidos;
 
 
--- =========================================
--- 15. SELECT - ITENS DOS PEDIDOS
--- =========================================
+-- 23. ITENS DOS PEDIDOS
 
 SELECT * FROM Item_Pedido;
 
 
--- =========================================
--- 16. SELECT - PAGAMENTOS
--- =========================================
+-- 24. PAGAMENTOS
 
 SELECT * FROM Pagamentos;
 
 
--- =========================================
--- 17. SELECT - ENTREGAS
--- =========================================
+-- 25. ENTREGAS
 
 SELECT * FROM Entregas;
 
 
 -- =========================================
--- 18. PRODUTOS ACIMA DE 100 REAIS
+-- CONSULTAS COM RELACIONAMENTOS
 -- =========================================
 
-SELECT nome, preco
-FROM Produtos
-WHERE preco > 100;
 
-
--- =========================================
--- 19. USUARIOS E SEUS PEDIDOS
--- =========================================
+-- 26. USUARIOS E SEUS PEDIDOS
 
 SELECT
+    Usuarios.id_usuario,
     Usuarios.nome,
+    Usuarios.cpf,
     Pedidos.id_pedido,
     Pedidos.data_pedido,
     Pedidos.valor_total,
@@ -283,25 +309,23 @@ INNER JOIN Pedidos
 ON Usuarios.id_usuario = Pedidos.id_usuario;
 
 
--- =========================================
--- 20. PRODUTOS E CATEGORIAS
--- =========================================
+-- 27. PRODUTOS E SUAS CATEGORIAS
 
 SELECT
+    Produtos.id_produto,
     Produtos.nome AS produto,
-    Categorias.nome AS categoria,
-    Produtos.preco
+    Produtos.preco,
+    Categorias.nome AS categoria
 FROM Produtos
 INNER JOIN Categorias
 ON Produtos.id_categoria = Categorias.id_categoria;
 
 
--- =========================================
--- 21. ITENS DOS PEDIDOS
--- =========================================
+-- 28. ITENS DOS PEDIDOS
 
 SELECT
     Item_Pedido.id_item,
+    Item_Pedido.id_pedido,
     Produtos.nome AS produto,
     Item_Pedido.quantidade,
     Item_Pedido.preco_unitario
@@ -310,9 +334,7 @@ INNER JOIN Produtos
 ON Item_Pedido.id_produto = Produtos.id_produto;
 
 
--- =========================================
--- 22. USUARIOS E RECUPERACAO DE SENHA
--- =========================================
+-- 29. USUARIOS E RECUPERACAO DE SENHA
 
 SELECT
     Usuarios.nome,
@@ -325,12 +347,12 @@ INNER JOIN Recuperacao_Senha
 ON Usuarios.id_usuario = Recuperacao_Senha.id_usuario;
 
 
--- =========================================
--- 23. PEDIDOS E PAGAMENTOS
--- =========================================
+-- 30. PEDIDOS E PAGAMENTOS (RELACAO 1:N)
 
 SELECT
     Pedidos.id_pedido,
+    Pedidos.valor_total,
+    Pagamentos.id_pagamento,
     Pagamentos.metodo_pagamento,
     Pagamentos.valor,
     Pagamentos.data_pagamento,
@@ -340,12 +362,11 @@ INNER JOIN Pagamentos
 ON Pedidos.id_pedido = Pagamentos.id_pedido;
 
 
--- =========================================
--- 24. PEDIDOS E ENTREGAS
--- =========================================
+-- 31. PEDIDOS E ENTREGAS (RELACAO 1:N)
 
 SELECT
     Pedidos.id_pedido,
+    Entregas.id_entrega,
     Entregas.tipo_entrega,
     Entregas.endereco,
     Entregas.data_envio,
@@ -357,39 +378,56 @@ ON Pedidos.id_pedido = Entregas.id_pedido;
 
 
 -- =========================================
--- 25. PEDIDOS ACIMA DE 1000 REAIS
+-- CONSULTAS ESPECIFICAS
 -- =========================================
+
+
+-- 32. PRODUTOS ACIMA DE 100 REAIS
+
+SELECT nome, preco
+FROM Produtos
+WHERE preco > 100;
+
+
+-- 33. PEDIDOS ACIMA DE 1000 REAIS
 
 SELECT *
 FROM Pedidos
 WHERE valor_total > 1000;
 
 
--- =========================================
--- 26. RELATORIO COMPLETO DE VENDAS
--- =========================================
+-- 34. PRODUTOS COM ESTOQUE DISPONIVEL
+
+SELECT nome, estoque
+FROM Produtos
+WHERE estoque > 0 AND ativo = TRUE;
+
+
+-- 35. RELATORIO COMPLETO DE VENDAS
 
 SELECT
     Usuarios.nome AS usuario,
+    Usuarios.cpf,
     Pedidos.id_pedido,
     Pedidos.data_pedido,
     Produtos.nome AS produto,
     Item_Pedido.quantidade,
     Item_Pedido.preco_unitario,
-
     (Item_Pedido.quantidade * Item_Pedido.preco_unitario)
-    AS total_item,
-
+        AS total_item,
     Pedidos.valor_total,
     Pedidos.status
-
 FROM Usuarios
-
 INNER JOIN Pedidos
-ON Usuarios.id_usuario = Pedidos.id_usuario
-
+    ON Usuarios.id_usuario = Pedidos.id_usuario
 INNER JOIN Item_Pedido
-ON Pedidos.id_pedido = Item_Pedido.id_pedido
-
+    ON Pedidos.id_pedido = Item_Pedido.id_pedido
 INNER JOIN Produtos
-ON Item_Pedido.id_produto = Produtos.id_produto;
+    ON Item_Pedido.id_produto = Produtos.id_produto;
+
+
+-- =========================================
+-- 36. VISUALIZAR TODAS AS TABELAS
+-- =========================================
+
+SHOW TABLES;
