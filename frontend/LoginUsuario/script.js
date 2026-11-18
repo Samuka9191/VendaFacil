@@ -15,7 +15,7 @@ botaoEntrar.addEventListener("click", (event) => {
   }
 
   if (usuario === "teste@exemplo.com" && senha === "senai123") {
-    window.location.href = "../menuPrincipal/menuPrincipal.html";
+    window.location.href = "../CarrinhoUsuario/index.html";
   } else {
     mensagemErro.textContent = "Usuário ou senha incorretos. Tente novamente.";
   }
