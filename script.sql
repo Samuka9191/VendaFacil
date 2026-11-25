@@ -15,6 +15,20 @@ CREATE TABLE Usuarios (
     status VARCHAR(30)
 );
 
+CREATE TABLE Cliente (
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    telefone VARCHAR(20),
+    endereco VARCHAR(255),
+    data_cadastro DATE,
+    status VARCHAR(30),
+    id_usuario INT,
+    FOREIGN KEY (id_usuario)
+        REFERENCES Usuarios(id_usuario)
+);
+
 
 CREATE TABLE Recuperacao_Senha (
     id_recuperacao INT PRIMARY KEY AUTO_INCREMENT,
